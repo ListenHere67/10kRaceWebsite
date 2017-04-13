@@ -3,22 +3,20 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
     <h2><%: Title %>.</h2>
     <div class="jumbotron">
-         <h1>Product details</h1>
+        <h1>Product details</h1>
     </div>
     <br />
     <br />
-    
+
     <br />
-          <div class="lead">
+    <div class="lead">
         <asp:ListView ID="lstAllProducts" runat="server"
             OnItemEditing="lstAllProducts_ItemEditing"
             OnItemUpdating="lstAllProducts_ItemUpdating"
             OnItemCanceling="lstAllProducts_ItemCanceling"
             OnItemDeleting="lstAllProducts_ItemDeleting"
             InsertItemPosition="LastItem"
-            
             OnItemInserting="lstAllProducts_ItemInserting">
-
             <LayoutTemplate>
                 <table id="Table1" runat="server">
                     <tr id="Tr1" runat="server">
@@ -40,7 +38,6 @@
                     </tr>
                 </table>
             </LayoutTemplate>
-
             <ItemTemplate>
                 <tr>
                     <td>
@@ -59,7 +56,6 @@
                     </td>
                 </tr>
             </ItemTemplate>
-
             <EditItemTemplate>
                 <tr>
                     <td>
@@ -78,7 +74,6 @@
                     </td>
                 </tr>
             </EditItemTemplate>
-
             <InsertItemTemplate>
                 <tr style="">
                     <td>
@@ -97,7 +92,6 @@
 
                 </tr>
             </InsertItemTemplate>
-
         </asp:ListView>
     </div>
 

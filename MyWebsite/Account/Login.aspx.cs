@@ -68,8 +68,7 @@ namespace MyWebsite.Account
         {
             bool authenticated = false;
             var username = tbxUsername.Text;
-            var password = tbxPassword.Text;
-            
+            var password = tbxPassword.Text;          
             foreach (var _user in db.Users.Where(t => t.Username == username && t.Password == password))
             {
                 user = _user;
@@ -77,7 +76,6 @@ namespace MyWebsite.Account
                 authenticated = true;
                 break;
             }
-
             if (authenticated)
             {
                 IdentityHelper.RedirectToReturnUrl(Request.QueryString["ReturnUrl"], Response);            
@@ -86,11 +84,9 @@ namespace MyWebsite.Account
             }
             else
             {
-                FailureText.Text = "Invalid login attempt";
-                ErrorMessage.Visible = true;
-                //break;
+                FailureText.Text = "Invalid login attempt. Please check your user details and try again.";
+                ErrorMessage.Visible = true;              
             }
-
         }
     }
 }

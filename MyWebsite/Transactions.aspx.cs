@@ -115,7 +115,6 @@ namespace MyWebsite
                 {
                     product.ProductDesc = " ";
                 }
-
                 if (product.ProductName == null)
                 {
                     product.ProductName = " ";
