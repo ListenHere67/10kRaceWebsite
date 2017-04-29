@@ -35,7 +35,7 @@
                 Click on this link to search for specific information in the database.
             </p>
             <p>
-                <a class="btn btn-default" href="/search.aspx">Learn more &raquo;</a>
+                <a class="btn btn-default" href="/search.aspx">Search records &raquo;</a>
             </p>
         </div>
     </div>
