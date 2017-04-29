@@ -63,9 +63,7 @@
                 <ItemTemplate>
                     <tr>
                         <td>
-                            <asp:Button ID="DeleteButton" runat="server" CommandName="Delete"
-                                Text="Delete" />
-                            <asp:Button ID="EditButton" runat="server" CommandName="Edit" Text="Edit" />
+                           
                         </td>
                         <td>
                             <asp:Label ID="lblProductID" runat="server" Text='<%# Eval("ProductID") %>' />
@@ -78,42 +76,8 @@
                         </td>
                     </tr>
                 </ItemTemplate>
-                <EditItemTemplate>
-                    <tr>
-                        <td>
-                            <asp:Button ID="UpdateButton" runat="server" CommandName="Update"
-                                Text="Update" />
-                            <asp:Button ID="CancelButton" runat="server" CommandName="Cancel"
-                                Text="Cancel" />
-                        </td>
-                        <asp:Label ID="lblProductID" runat="server" Text='<%# Eval("ProductID") %>' />
-                        </td> 
-                    <td>
-                        <asp:TextBox ID="tbxProductName" runat="server" Text='<%# Bind("ProductName") %>' />
-                    </td>
-                        <td>
-                            <asp:TextBox ID="tbxProductDescription" runat="server" Text='<%# Bind("ProductDescription") %>' />
-                        </td>
-                    </tr>
-                </EditItemTemplate>
-                <InsertItemTemplate>
-                    <tr style="">
-                        <td>
-                            <asp:Button ID="InsertButton" runat="server" CommandName="Insert"
-                                Text="Insert" />
-                            <asp:Button ID="CancelButton" runat="server" CommandName="Cancel"
-                                Text="Clear" />
-                        </td>
-                        <td>&nbsp;</td>
-                        <td>
-                            <asp:TextBox ID="tbxProductName" runat="server" Text='<%# Bind("ProductName") %>' />
-                        </td>
-                        <td>
-                            <asp:TextBox ID="tbxProductDescription" runat="server" Text='<%# Bind("ProductDescription") %>' />
-                        </td>
-
-                    </tr>
-                </InsertItemTemplate>
+               
+               
             </asp:ListView>
         </div>
     </p>
