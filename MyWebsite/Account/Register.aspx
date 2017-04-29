@@ -14,7 +14,7 @@
             <asp:Label runat="server" AssociatedControlID="tbxForename" CssClass="col-md-2 control-label">Forename</asp:Label>
             <div class="col-md-10">
                 <asp:TextBox runat="server" ID="tbxForename" CssClass="form-control" />
-                <asp:RequiredFieldValidator runat="server" ControlToValidate="Email"
+                <asp:RequiredFieldValidator runat="server" ControlToValidate="tbxForename"
                     CssClass="text-danger" ErrorMessage="The forename field is required." />
             </div>
         </div>
@@ -30,7 +30,7 @@
             <asp:Label runat="server" AssociatedControlID="tbxUsername" CssClass="col-md-2 control-label">User name</asp:Label>
             <div class="col-md-10">
                 <asp:TextBox runat="server" ID="tbxUsername" CssClass="form-control" />
-                <asp:RequiredFieldValidator runat="server" ControlToValidate="Email"
+                <asp:RequiredFieldValidator runat="server" ControlToValidate="tbxUsername"
                     CssClass="text-danger" ErrorMessage="The username field is required." />
             </div>
         </div>
@@ -48,7 +48,7 @@
                 <asp:TextBox runat="server" ID="ConfirmPassword" TextMode="Password" CssClass="form-control" />
                 <asp:RequiredFieldValidator runat="server" ControlToValidate="ConfirmPassword"
                     CssClass="text-danger" Display="Dynamic" ErrorMessage="The confirm password field is required." />
-                <asp:CompareValidator runat="server" ControlToCompare="Password" ControlToValidate="ConfirmPassword"
+                <asp:CompareValidator runat="server" ControlToCompare="tbxPassword" ControlToValidate="ConfirmPassword"
                     CssClass="text-danger" Display="Dynamic" ErrorMessage="The password and confirmation password do not match." />
             </div>
         </div>

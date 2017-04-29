@@ -18,57 +18,101 @@ namespace MyWebsite.Account
 
         protected void CreateNewUser_Click(object sender, EventArgs e)
         {
-            bool updated = false;
+            
             User user = new User();          
             var username = tbxUsername.Text;
             var password = tbxPassword.Text;
             var forename = tbxForename.Text;
             var surname = tbxSurname.Text;
+
+            user.Username = username;
+            user.Password = password;
+            user.Username = username;
+            user.Forename = forename;
+            user.Surname = surname;
+
             //Create the surname automatically - optional
             // var forenameFirstLetter = tbxForename.Text.Substring(0, 1).ToLower();
             //var username = forenameFirstLetter + surname;
-            updated = UpdateUserRecord(user, "Add");
-            if (updated)
+            bool exists = CheckIfExists(user);
+            if (!exists)
             {
-                IdentityHelper.RedirectToReturnUrl(Request.QueryString["ReturnUrl"], Response);
-                ((SiteMaster)this.Master).MenuVisibility = true;
-                ((SiteMaster)this.Master).TransactionsVisibility = true;
+                bool updated = UpdateUserRecord(user, "Add");
+                if (updated)
+                {
+                    IdentityHelper.RedirectToReturnUrl(Request.QueryString["ReturnUrl"], Response);
+                    ((SiteMaster)this.Master).MenuVisibility = true;
+                    ((SiteMaster)this.Master).TransactionsVisibility = true;
+                }
+                else
+                {
+                    ErrorMessage.Text = "Problem saving record to database";
+                }
             }
             else
             {
-                ErrorMessage.Text = "Problem saving record to database";
-            }                              
+                ErrorMessage.Text = "The user already exists.";
+            }                                
+        }
+
+        private bool CheckIfExists(User user)
+        {
+            bool exists = false;
+            try
+            {
+                foreach (var _user in db.Users.Where(t => t.Username == user.Username))
+                {
+                    exists = true;
+                }
+            }
+            catch (Exception ex)
+            {
+                ErrorMessage.Text = "Problem checking if the user exists " + ex.InnerException;
+            }
+            return exists;
         }
 
         public bool UpdateUserRecord(User user, string entityState)
         {
             bool updated = false;
-            if (entityState == "Add")
-            {
-                if (user.Username != null && user.Password != null)
+            try
+            {               
+                if (entityState == "Add")
                 {
-                    db.Entry(User).State = System.Data.Entity.EntityState.Added;
-                }                               
-            }
-            if (entityState == "Modify")
-            {
-                foreach (var _user in db.Users.Where(t => t.UserID == user.UserID))
-                {
-                    //your logic
+                    if (user.Username != null && user.Password != null)
+                    {
+                        //Remove this line if using auto-increment in the database
+                        user.UserID = Guid.NewGuid().ToString();
+                        db.Entry(user).State = System.Data.Entity.EntityState.Added;
+                    }
                 }
-                db.Configuration.AutoDetectChangesEnabled = true;
-                db.Configuration.ValidateOnSaveEnabled = true;
+                if (entityState == "Modify")
+                {
+                    foreach (var _user in db.Users.Where(t => t.UserID == user.UserID))
+                    {
+                        _user.Username = user.Username;
+                        _user.Password = user.Password;
+                        _user.Forename = user.Forename;
+                        _user.Surname = user.Surname;
+                    }
+                    db.Configuration.AutoDetectChangesEnabled = true;
+                    db.Configuration.ValidateOnSaveEnabled = true;
+                }
+                if (entityState == "Delete")
+                {
+                    db.Users.RemoveRange(
+                    db.Users.Where(t => t.UserID == user.UserID));
+                }
+                int saved = db.SaveChanges();
+                if (saved > 0)
+                {
+                    updated = true;
+                }
             }
-            if (entityState == "Delete")
+            catch (Exception ex)
             {
-                db.Users.RemoveRange(
-                db.Users.Where(t => t.UserID == user.UserID));
-            }
-            int saved = db.SaveChanges();
-            if (saved>0)
-            {
-                updated = true;
-            }
+                ErrorMessage.Text = "Problem saving record to database" + ex.InnerException;
+            }         
             return updated;
         }
     }

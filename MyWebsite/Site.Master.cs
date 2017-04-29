@@ -24,14 +24,32 @@ namespace MyWebsite
             set { this.mnuReports.Visible = value; }
         }
 
+        public bool SearchVisibility
+        {
+            get { return mnuSearch.Visible; }
+            set { this.mnuSearch.Visible = value; }
+        }
+
+        public bool UserNameVisibility
+        {
+            get { return lblUsername.Visible; }
+            set { this.lblUsername.Visible = value; }
+        }
+
         public bool TransactionsVisibility
         {
             get { return mnuTransactions.Visible; }
             set { this.mnuTransactions.Visible = value; }
         }
 
+        public string UserNameLabel
+        {
+            get { return lblUsername.Text; }
+            set { this.lblUsername.Text = value; }
+        }
 
 
+        public User currentuser;
 
         protected void Page_Init(object sender, EventArgs e)
         {
@@ -88,6 +106,10 @@ namespace MyWebsite
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (currentuser != null)
+            {
+                lblUsername.Text = currentuser.Username;
+            }
             
         }
 
