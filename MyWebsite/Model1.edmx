@@ -1,0 +1,356 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Participant">
+          <Key>
+            <PropertyRef Name="PPSno" />
+          </Key>
+          <Property Name="PPSno" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="FirstName" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="MiddleName" Type="varchar" MaxLength="20" />
+          <Property Name="Surname" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="Address" Type="varchar" MaxLength="40" Nullable="false" />
+          <Property Name="City" Type="varchar" MaxLength="20" />
+          <Property Name="Country" Type="varchar" MaxLength="20" />
+          <Property Name="DOB" Type="date" Nullable="false" />
+          <Property Name="Gender" Type="varchar" MaxLength="1" Nullable="false" />
+          <Property Name="CertRec" Type="time" Precision="0" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view '10K-Race.dbo.RaceName' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="RaceName">
+          <Key>
+            <PropertyRef Name="PPSno" />
+            <PropertyRef Name="RaceName" />
+          </Key>
+          <Property Name="PPSno" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="RaceName" Type="varchar" MaxLength="4" Nullable="false" />
+          <Property Name="StartTime" Type="time" Precision="0" />
+          <Property Name="EndTime" Type="time" Precision="0" />
+          <Property Name="TimeCompletd" Type="time" Precision="0" StoreGeneratedPattern="Computed" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view '10K-Race.dbo.RaceResults' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="RaceResults">
+          <Key>
+            <PropertyRef Name="FirstName" />
+            <PropertyRef Name="Surname" />
+            <PropertyRef Name="RaceName" />
+          </Key>
+          <Property Name="FirstName" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="Surname" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="RaceName" Type="varchar" MaxLength="4" Nullable="false" />
+          <Property Name="TimeCompletd" Type="time" Precision="0" />
+        </EntityType>
+        <EntityType Name="RaceStats">
+          <Key>
+            <PropertyRef Name="RaceName" />
+          </Key>
+          <Property Name="RaceName" Type="varchar" MaxLength="4" Nullable="false" />
+          <Property Name="TotalRun" Type="numeric" Precision="6" Scale="0" />
+          <Property Name="CompRun" Type="numeric" Precision="6" Scale="0" />
+          <Property Name="NoFemale" Type="numeric" Precision="6" Scale="0" />
+          <Property Name="NoMale" Type="numeric" Precision="6" Scale="0" />
+          <Property Name="MWname.first" Type="varchar" MaxLength="20" />
+          <Property Name="MWname.last" Type="varchar" MaxLength="20" />
+          <Property Name="MW.age" Type="numeric" Precision="3" Scale="0" />
+          <Property Name="FWname.first" Type="varchar" MaxLength="20" />
+          <Property Name="FWname.last" Type="varchar" MaxLength="20" />
+          <Property Name="FW.age" Type="numeric" Precision="3" Scale="0" />
+          <Property Name="MMname.first" Type="varchar" MaxLength="20" />
+          <Property Name="MMname.last" Type="varchar" MaxLength="20" />
+          <Property Name="MM.age" Type="numeric" Precision="3" Scale="0" />
+          <Property Name="FMname.first" Type="varchar" MaxLength="20" />
+          <Property Name="FMname.last" Type="varchar" MaxLength="20" />
+          <Property Name="FM.age" Type="numeric" Precision="3" Scale="0" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="UserID" />
+          </Key>
+          <Property Name="UserID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Forename" Type="varchar" MaxLength="50" />
+          <Property Name="Surname" Type="varchar" MaxLength="50" />
+          <Property Name="Username" Type="nvarchar" MaxLength="50" />
+          <Property Name="Password" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <Association Name="FK_RaceName_Participant">
+          <End Role="Participant" Type="Self.Participant" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="RaceName" Type="Self.RaceName" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Participant">
+              <PropertyRef Name="PPSno" />
+            </Principal>
+            <Dependent Role="RaceName">
+              <PropertyRef Name="PPSno" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RaceName_RaceStats">
+          <End Role="RaceStats" Type="Self.RaceStats" Multiplicity="1" />
+          <End Role="RaceName" Type="Self.RaceName" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RaceStats">
+              <PropertyRef Name="RaceName" />
+            </Principal>
+            <Dependent Role="RaceName">
+              <PropertyRef Name="RaceName" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ModelStoreContainer">
+          <EntitySet Name="Participant" EntityType="Self.Participant" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="RaceStats" EntityType="Self.RaceStats" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="RaceName" EntityType="Self.RaceName" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [RaceName].[PPSno] AS [PPSno], 
+    [RaceName].[RaceName] AS [RaceName], 
+    [RaceName].[StartTime] AS [StartTime], 
+    [RaceName].[EndTime] AS [EndTime], 
+    [RaceName].[TimeCompletd] AS [TimeCompletd]
+    FROM [dbo].[RaceName] AS [RaceName]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="RaceResults" EntityType="Self.RaceResults" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [RaceResults].[FirstName] AS [FirstName], 
+    [RaceResults].[Surname] AS [Surname], 
+    [RaceResults].[RaceName] AS [RaceName], 
+    [RaceResults].[TimeCompletd] AS [TimeCompletd]
+    FROM [dbo].[RaceResults] AS [RaceResults]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK_RaceName_Participant" Association="Self.FK_RaceName_Participant">
+            <End Role="Participant" EntitySet="Participant" />
+            <End Role="RaceName" EntitySet="RaceName" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RaceName_RaceStats" Association="Self.FK_RaceName_RaceStats">
+            <End Role="RaceStats" EntitySet="RaceStats" />
+            <End Role="RaceName" EntitySet="RaceName" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Participant">
+          <Key>
+            <PropertyRef Name="PPSno" />
+          </Key>
+          <Property Name="PPSno" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="FirstName" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="MiddleName" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Surname" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Address" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="City" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Country" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="DOB" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Gender" Type="String" MaxLength="1" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CertRec" Type="Time" Precision="0" />
+          <NavigationProperty Name="RaceNames" Relationship="Self.FK_RaceName_Participant" FromRole="Participant" ToRole="RaceName" />
+        </EntityType>
+        <EntityType Name="RaceStat">
+          <Key>
+            <PropertyRef Name="RaceName" />
+          </Key>
+          <Property Name="RaceName" Type="String" MaxLength="4" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="TotalRun" Type="Decimal" Precision="6" Scale="0" />
+          <Property Name="CompRun" Type="Decimal" Precision="6" Scale="0" />
+          <Property Name="NoFemale" Type="Decimal" Precision="6" Scale="0" />
+          <Property Name="NoMale" Type="Decimal" Precision="6" Scale="0" />
+          <Property Name="MWname_first" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="MWname_last" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="MW_age" Type="Decimal" Precision="3" Scale="0" />
+          <Property Name="FWname_first" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="FWname_last" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="FW_age" Type="Decimal" Precision="3" Scale="0" />
+          <Property Name="MMname_first" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="MMname_last" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="MM_age" Type="Decimal" Precision="3" Scale="0" />
+          <Property Name="FMname_first" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="FMname_last" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="FM_age" Type="Decimal" Precision="3" Scale="0" />
+          <NavigationProperty Name="RaceNames" Relationship="Self.FK_RaceName_RaceStats" FromRole="RaceStats" ToRole="RaceName" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="UserID" />
+          </Key>
+          <Property Name="UserID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Forename" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Surname" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Username" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="RaceName">
+          <Key>
+            <PropertyRef Name="PPSno" />
+            <PropertyRef Name="RaceName1" />
+          </Key>
+          <Property Name="PPSno" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="RaceName1" Type="String" MaxLength="4" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="StartTime" Type="Time" Precision="0" />
+          <Property Name="EndTime" Type="Time" Precision="0" />
+          <Property Name="TimeCompletd" Type="Time" annotation:StoreGeneratedPattern="Computed" Precision="0" />
+          <NavigationProperty Name="Participant" Relationship="Self.FK_RaceName_Participant" FromRole="RaceName" ToRole="Participant" />
+          <NavigationProperty Name="RaceStat" Relationship="Self.FK_RaceName_RaceStats" FromRole="RaceName" ToRole="RaceStats" />
+        </EntityType>
+        <EntityType Name="RaceResult">
+          <Key>
+            <PropertyRef Name="FirstName" />
+            <PropertyRef Name="Surname" />
+            <PropertyRef Name="RaceName" />
+          </Key>
+          <Property Name="FirstName" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Surname" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="RaceName" Type="String" MaxLength="4" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="TimeCompletd" Type="Time" Precision="0" />
+        </EntityType>
+        <Association Name="FK_RaceName_Participant">
+          <End Role="Participant" Type="Self.Participant" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="RaceName" Type="Self.RaceName" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Participant">
+              <PropertyRef Name="PPSno" />
+            </Principal>
+            <Dependent Role="RaceName">
+              <PropertyRef Name="PPSno" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RaceName_RaceStats">
+          <End Role="RaceStats" Type="Self.RaceStat" Multiplicity="1" />
+          <End Role="RaceName" Type="Self.RaceName" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RaceStats">
+              <PropertyRef Name="RaceName" />
+            </Principal>
+            <Dependent Role="RaceName">
+              <PropertyRef Name="RaceName1" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Practical1Entities1" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Participants" EntityType="Self.Participant" />
+          <EntitySet Name="RaceStats" EntityType="Self.RaceStat" />
+          <EntitySet Name="Users" EntityType="Self.User" />
+          <EntitySet Name="RaceNames" EntityType="Self.RaceName" />
+          <EntitySet Name="RaceResults" EntityType="Self.RaceResult" />
+          <AssociationSet Name="FK_RaceName_Participant" Association="Self.FK_RaceName_Participant">
+            <End Role="Participant" EntitySet="Participants" />
+            <End Role="RaceName" EntitySet="RaceNames" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RaceName_RaceStats" Association="Self.FK_RaceName_RaceStats">
+            <End Role="RaceStats" EntitySet="RaceStats" />
+            <End Role="RaceName" EntitySet="RaceNames" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ModelStoreContainer" CdmEntityContainer="Practical1Entities1">
+          <EntitySetMapping Name="Participants">
+            <EntityTypeMapping TypeName="Model.Participant">
+              <MappingFragment StoreEntitySet="Participant">
+                <ScalarProperty Name="PPSno" ColumnName="PPSno" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="MiddleName" ColumnName="MiddleName" />
+                <ScalarProperty Name="Surname" ColumnName="Surname" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="Country" ColumnName="Country" />
+                <ScalarProperty Name="DOB" ColumnName="DOB" />
+                <ScalarProperty Name="Gender" ColumnName="Gender" />
+                <ScalarProperty Name="CertRec" ColumnName="CertRec" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="RaceStats">
+            <EntityTypeMapping TypeName="Model.RaceStat">
+              <MappingFragment StoreEntitySet="RaceStats">
+                <ScalarProperty Name="RaceName" ColumnName="RaceName" />
+                <ScalarProperty Name="TotalRun" ColumnName="TotalRun" />
+                <ScalarProperty Name="CompRun" ColumnName="CompRun" />
+                <ScalarProperty Name="NoFemale" ColumnName="NoFemale" />
+                <ScalarProperty Name="NoMale" ColumnName="NoMale" />
+                <ScalarProperty Name="MWname_first" ColumnName="MWname.first" />
+                <ScalarProperty Name="MWname_last" ColumnName="MWname.last" />
+                <ScalarProperty Name="MW_age" ColumnName="MW.age" />
+                <ScalarProperty Name="FWname_first" ColumnName="FWname.first" />
+                <ScalarProperty Name="FWname_last" ColumnName="FWname.last" />
+                <ScalarProperty Name="FW_age" ColumnName="FW.age" />
+                <ScalarProperty Name="MMname_first" ColumnName="MMname.first" />
+                <ScalarProperty Name="MMname_last" ColumnName="MMname.last" />
+                <ScalarProperty Name="MM_age" ColumnName="MM.age" />
+                <ScalarProperty Name="FMname_first" ColumnName="FMname.first" />
+                <ScalarProperty Name="FMname_last" ColumnName="FMname.last" />
+                <ScalarProperty Name="FM_age" ColumnName="FM.age" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="Model.User">
+              <MappingFragment StoreEntitySet="User">
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="Forename" ColumnName="Forename" />
+                <ScalarProperty Name="Surname" ColumnName="Surname" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="RaceNames">
+            <EntityTypeMapping TypeName="Model.RaceName">
+              <MappingFragment StoreEntitySet="RaceName">
+                <ScalarProperty Name="PPSno" ColumnName="PPSno" />
+                <ScalarProperty Name="RaceName1" ColumnName="RaceName" />
+                <ScalarProperty Name="StartTime" ColumnName="StartTime" />
+                <ScalarProperty Name="EndTime" ColumnName="EndTime" />
+                <ScalarProperty Name="TimeCompletd" ColumnName="TimeCompletd" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="RaceResults">
+            <EntityTypeMapping TypeName="Model.RaceResult">
+              <MappingFragment StoreEntitySet="RaceResults">
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="Surname" ColumnName="Surname" />
+                <ScalarProperty Name="RaceName" ColumnName="RaceName" />
+                <ScalarProperty Name="TimeCompletd" ColumnName="TimeCompletd" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

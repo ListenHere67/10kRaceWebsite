@@ -12,7 +12,7 @@ namespace MyWebsite.Account
 {
     public partial class Login : Page
     {
-        Practical1Entities db = new Practical1Entities();
+        Practical1Entities1 dbo = new Practical1Entities1 ();
         User user = new User();
 
         protected void Page_Load(object sender, EventArgs e)
@@ -31,14 +31,14 @@ namespace MyWebsite.Account
             }
         }
 
-       
+       // Now the login part
 
         protected void LogIn_Click(object sender, EventArgs e)
         {
             bool authenticated = false;
             var username = tbxUsername.Text;
             var password = tbxPassword.Text;          
-            foreach (var _user in db.Users.Where(t => t.Username == username && t.Password == password))
+            foreach (var _user in dbo.Users.Where(t => t.Username == username && t.Password == password))
             {
                 user = _user;                          
                 authenticated = true;
@@ -50,7 +50,7 @@ namespace MyWebsite.Account
                 //lblUser.Text = user.Username.ToString();
                 ((SiteMaster)this.Master).UserNameVisibility = true;
                 ((SiteMaster)this.Master).UserNameLabel = this.user.Username.ToString();
-                ((SiteMaster)this.Master).currentuser = this.user;         
+                ((SiteMaster)this.Master).currentuser = this.user;        
                 ((SiteMaster)this.Master).MenuVisibility = true;
                 ((SiteMaster)this.Master).TransactionsVisibility = true;
                 ((SiteMaster)this.Master).SearchVisibility = true;

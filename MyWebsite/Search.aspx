@@ -7,13 +7,13 @@
     <br />
     <br />
     <p>
-        Please select which database you would like to search fro the drop down box
+        Please select which database you would like to search from the drop down box
     </p>
     <div class="form-group">
         <div class="col-md-10">
             <asp:DropDownList ID="cboDatabaseChoice" CssClass="form-control" AutoPostBack="true" OnSelectedIndexChanged="cboDatabaseChoice_SelectedIndexChanged" runat="server">
-                <asp:ListItem>Transactions</asp:ListItem>
-                <asp:ListItem>Products</asp:ListItem>
+                <asp:ListItem>Participants</asp:ListItem>
+                <asp:ListItem>Race History</asp:ListItem>
             </asp:DropDownList>
         </div>
     </div>
@@ -46,9 +46,9 @@
                                 <table id="itemPlaceholderContainer" runat="server" border="1">
                                     <tr id="Tr2" runat="server">
                                         <th id="Th1" runat="server" border="1"></th>
-                                        <th id="Th2" runat="server">Product ID</th>
-                                        <th id="Th3" runat="server">Product Name</th>
-                                        <th id="Th4" runat="server">Product Description</th>
+                                        <th id="Th2" runat="server">FirstName</th>
+                                        <th id="Th3" runat="server">Surname</th>
+                                        <th id="Th4" runat="server">PPSno</th>
                                     </tr>
                                     <tr id="itemPlaceholder" runat="server">
                                     </tr>
@@ -66,13 +66,13 @@
                            
                         </td>
                         <td>
-                            <asp:Label ID="lblProductID" runat="server" Text='<%# Eval("ProductID") %>' />
+                            <asp:Label ID="lblFirstName" runat="server" Text='<%# Eval("FirstName") %>' />
                         </td>
                         <td>
-                            <asp:Label ID="ProductNameLabel" runat="server" Text='<%# Eval("ProductName") %>' />
+                            <asp:Label ID="tbxSurname" runat="server" Text='<%# Eval("Surname") %>' />
                         </td>
                         <td>
-                            <asp:Label ID="ProductDescLabel" runat="server" Text='<%# Eval("ProductDescription") %>' />
+                            <asp:Label ID="tbxPPSno" runat="server" Text='<%# Eval("PPSno") %>' />
                         </td>
                     </tr>
                 </ItemTemplate>

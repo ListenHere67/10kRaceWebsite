@@ -12,7 +12,8 @@ namespace MyWebsite
 {
     public partial class Transactions : System.Web.UI.Page
     {
-        Practical1Entities db = new Practical1Entities();
+        Practical1Entities1 dbo = new Practical1Entities1();
+
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
@@ -26,13 +27,13 @@ namespace MyWebsite
 
         protected void lstAllProducts_ItemInserting(object sender, ListViewInsertEventArgs e)
         {
-            Product product = new Product();           
-            TextBox tbx = (e.Item.FindControl("tbxProductName")) as TextBox;
+            Participant product = new Participant();           
+            TextBox tbx = (e.Item.FindControl("tbxSurname")) as TextBox;
             if (tbx != null)
-                product.ProductName = tbx.Text;          
-            tbx = (e.Item.FindControl("tbxProductDescription")) as TextBox;
+                product.Surname = tbx.Text;          
+            tbx = (e.Item.FindControl("tbxPPSno")) as TextBox;
             if (tbx != null)
-              product.ProductDesc = tbx.Text;
+              product.PPSno = tbx.Text;
             UpdateProductRecord(product, "Add");          
             ResetProductView();
         }
@@ -46,16 +47,16 @@ namespace MyWebsite
 
         protected void lstAllProducts_ItemUpdating(object sender, ListViewUpdateEventArgs e)
         {
-            Product product = new Product();
-            Label lbl = (lstAllProducts.Items[e.ItemIndex].FindControl("lblProductID")) as Label;
+            Participant product = new Participant();
+            TextBox lbl = (lstAllProducts.Items[e.ItemIndex].FindControl("FirstNameLabel")) as TextBox;
             if (lbl != null)
-                product.ProductID = Convert.ToInt16( lbl.Text);             
-            TextBox tbx = (lstAllProducts.Items[e.ItemIndex].FindControl("tbxProductName")) as TextBox;
+                product.FirstName = lbl.Text;             
+            TextBox tbx = (lstAllProducts.Items[e.ItemIndex].FindControl("tbxSurname")) as TextBox;
             if (tbx != null)
-                product.ProductName = tbx.Text;               
-            tbx = (lstAllProducts.Items[e.ItemIndex].FindControl("tbxProductDescription")) as TextBox;
+                product.Surname = tbx.Text;               
+            tbx = (lstAllProducts.Items[e.ItemIndex].FindControl("tbxPPSno")) as TextBox;
             if (tbx != null)
-                product.ProductDesc = tbx.Text;
+                product.PPSno = tbx.Text;
             UpdateProductRecord(product, "Modify");
             ResetProductView();
         }
@@ -67,16 +68,16 @@ namespace MyWebsite
 
         protected void lstAllProducts_ItemDeleting(object sender, ListViewDeleteEventArgs e)
         {
-            Product product = new Product();
-            Label lbl = (lstAllProducts.Items[e.ItemIndex].FindControl("lblProductID")) as Label;
+            Participant product = new Participant();
+            TextBox lbl = (lstAllProducts.Items[e.ItemIndex].FindControl("FirstNameLabel")) as TextBox;
             if (lbl != null)
-                product.ProductID = Convert.ToInt16(lbl.Text);
-            TextBox tbx = (lstAllProducts.Items[e.ItemIndex].FindControl("tbxProductName")) as TextBox;
+                product.FirstName = lbl.Text;
+            TextBox tbx = (lstAllProducts.Items[e.ItemIndex].FindControl("tbxSurname")) as TextBox;
             if (tbx != null)
-                product.ProductName = tbx.Text;
-            tbx = (lstAllProducts.Items[e.ItemIndex].FindControl("tbxProductDescription")) as TextBox;
+                product.Surname = tbx.Text;
+            tbx = (lstAllProducts.Items[e.ItemIndex].FindControl("tbxPPSno")) as TextBox;
             if (tbx != null)
-                product.ProductDesc = tbx.Text;
+                product.PPSno = tbx.Text;
             UpdateProductRecord(product, "Delete");
             ResetProductView();
             
@@ -84,17 +85,17 @@ namespace MyWebsite
 
         private DataTable GetProducts()
         {
-            Product p = new Product();
+            Participant p = new Participant();
             object[] obj = new object[3];
             DataTable dt = new DataTable();
-            dt.Columns.Add("ProductID");
-            dt.Columns.Add("ProductName");
-            dt.Columns.Add("ProductDescription");
-            foreach (var product in db.Products)
+            dt.Columns.Add("FirstName");
+            dt.Columns.Add("Surname");
+            dt.Columns.Add("PPSno");
+            foreach (var product in dbo.Participants)
             {
-                obj[0] = product.ProductID;
-                obj[1] = product.ProductName;
-                obj[2] = product.ProductDesc;               
+                obj[0] = product.FirstName;
+                obj[1] = product.Surname;
+                obj[2] = product.PPSno;               
                 dt.Rows.Add(obj);
             }          
             return dt;
@@ -107,36 +108,36 @@ namespace MyWebsite
             lstAllProducts.DataBind();
         }
 
-        public void UpdateProductRecord(Product product, string entityState)
+        public void UpdateProductRecord(Participant product, string entityState)
         {           
             if (entityState == "Add")
             {
-                if (product.ProductDesc == null)
+               /* if (product.ProductDesc == null)
                 {
                     product.ProductDesc = " ";
                 }
                 if (product.ProductName == null)
                 {
                     product.ProductName = " ";
-                }
-                db.Entry(product).State = System.Data.Entity.EntityState.Added;
+                }*/
+                dbo.Entry(product).State = System.Data.Entity.EntityState.Added;
             }
             if (entityState == "Modify")
             {
-                foreach (var productitem in db.Products.Where(t => t.ProductID == product.ProductID))
+                foreach (var productitem in dbo.Participants.Where(t => t.FirstName == product.FirstName))
                 {
-                    productitem.ProductName = product.ProductName;
-                    productitem.ProductDesc = product.ProductDesc;                
+                    productitem.Surname = product.Surname;
+                    productitem.PPSno = product.PPSno;                
                 }
-                db.Configuration.AutoDetectChangesEnabled = true;
-                db.Configuration.ValidateOnSaveEnabled = true;                        
+                dbo.Configuration.AutoDetectChangesEnabled = true;
+                dbo.Configuration.ValidateOnSaveEnabled = true;                        
             }
             if (entityState == "Delete")
             {
-                db.Products.RemoveRange(
-                db.Products.Where(t => t.ProductID == product.ProductID));
+                dbo.Participants.RemoveRange(
+                dbo.Participants.Where(t => t.FirstName == product.FirstName));
             }
-            db.SaveChanges();
+            dbo.SaveChanges();
         }
     }
 }

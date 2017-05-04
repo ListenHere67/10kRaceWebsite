@@ -29,7 +29,7 @@ namespace MyWebsite
         {
             public string a;
         }
-        Practical1Entities db = new Practical1Entities();
+        Practical1Entities1 dbo = new Practical1Entities1();
         
         string searchText { get; set; }
 
@@ -58,9 +58,9 @@ namespace MyWebsite
 
         private void PerformSearch(string databaseToSearch, string searchText)
         {
-            if (databaseToSearch == "Products")
+            if (databaseToSearch == "Participants")
             {
-                lstAllProducts.DataSource = GetProducts(searchText);
+                lstAllProducts.DataSource = GetParticipants(searchText);
                 if (lstAllProducts.Items.Count>0)
                 {
                     lstAllProducts.Visible = true;
@@ -69,19 +69,19 @@ namespace MyWebsite
             }
         }
 
-        private DataTable GetProducts(string searchText)
+        private DataTable GetParticipants(string searchText)
         {
             Product p = new Product();
             object[] obj = new object[3];
             DataTable dt = new DataTable();
-            dt.Columns.Add("ProductID");
-            dt.Columns.Add("ProductName");
-            dt.Columns.Add("ProductDescription");
-            foreach (var product in db.Products.Where(t => t.ProductDesc == searchText || t.ProductName == searchText))
+            dt.Columns.Add("FirstName");
+            dt.Columns.Add("Surname");
+            dt.Columns.Add("PPSno");
+            foreach (var product in dbo.Participants.Where(t => t.Surname == searchText || t.Surname == searchText))
             {
-                obj[0] = product.ProductID;
-                obj[1] = product.ProductName;
-                obj[2] = product.ProductDesc;
+                obj[0] = product.FirstName;
+                obj[1] = product.Surname;
+                obj[2] = product.PPSno;
                 dt.Rows.Add(obj);
             }
             return dt;
@@ -90,7 +90,7 @@ namespace MyWebsite
         private void ResetProductView()
         {
             lstAllProducts.EditIndex = -1;
-            lstAllProducts.DataSource = GetProducts("");
+            lstAllProducts.DataSource = GetParticipants("");
             lstAllProducts.DataBind();
         }
     }

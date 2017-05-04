@@ -6,7 +6,7 @@
 <head runat="server">
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title><%: Page.Title %> - My ASP.NET Application</title>
+    <title><%: Page.Title %> - Letterkenny 10k Race Database management and reports</title>
 
     <asp:PlaceHolder runat="server">
         <%: Scripts.Render("~/bundles/modernizr") %>
@@ -40,13 +40,13 @@
 
         <div class="navbar navbar-inverse navbar-fixed-top" id="mainMenu">
             <div class="container">
-                <div class="navbar-header">
+                <div class="navbar-header" style="color: #00ff90">
                     <button type="button" class="navbar-toggle" data-target=".navbar-collapse">
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" runat="server" href="~/">MyWebsite</a>
+                    <a class="navbar-brand" runat="server" href="~/">10k Website</a>
                     <asp:Label CssClass="navbar-brand" ID="lblUsername" runat="server"></asp:Label>
                    
                 </div>
@@ -54,7 +54,7 @@
                     <ul class="nav navbar-nav">
                         <li><a runat="server" href="~/">Welcome</a></li>
                         <li><a runat="server"  id="mnuReports" href="~/Reports">Reports</a></li>
-                         <li><a runat="server"  id="mnuSearch" href="~/Reports">Search</a></li>
+                         <li><a runat="server"  id="mnuSearch" href="~/Search">Search</a></li>
                         <li><a runat="server"  id="mnuTransactions" href="~/Transactions">Transactions</a></li>
                              
                     </ul>
@@ -84,7 +84,7 @@
             </asp:ContentPlaceHolder>
             <hr />
             <footer>
-                <p>&copy; <%: DateTime.Now.Year %> - MyWebsite</p>
+                <p aria-selected="undefined">&copy; <%: DateTime.Now.Year %> - 10k Race Letterkenny </p>
             </footer>
         </div>
     </form>

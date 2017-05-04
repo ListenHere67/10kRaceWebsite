@@ -1,9 +1,9 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Transactions.aspx.cs" Inherits="MyWebsite.Transactions" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Transactions2.aspx.cs" Inherits="MyWebsite.Transactions2" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
     <h2><%: Title %>.</h2>
     <div class="jumbotron">
-        <h1>Participant details</h1>
+        <h1>Participant Race details</h1>
     </div>
     <br />
     <br />
@@ -26,7 +26,8 @@
                                     <th id="Th1" runat="server" border="1"></th>
                                     <th id="Th2" runat="server">First Name</th>
                                     <th id="Th3" runat="server">Surname</th>
-                                    <th id="Th4" runat="server">PPS Number</th>
+                                    <th id="Th4" runat="server">Race</th>
+                                    <th id="Th5" runat="server">Time Completed</th>
                                 </tr>
                                 <tr id="itemPlaceholder" runat="server">
                                 </tr>
@@ -52,7 +53,10 @@
                         <asp:Label ID="SurnameLabel" runat="server" Text='<%# Eval("Surname") %>' />
                     </td>
                     <td>
-                        <asp:Label ID="PPSnoLabel" runat="server" Text='<%# Eval("PPSno") %>' />
+                        <asp:Label ID="RaceLBL" runat="server" Text='<%# Eval("RaceName") %>' />
+                    </td>
+                    <td>
+                        <asp:Label ID="TimeLBL" runat="server" Text='<%# Eval("TimeCompleted") %>' />
                     </td>
                 </tr>
             </ItemTemplate>

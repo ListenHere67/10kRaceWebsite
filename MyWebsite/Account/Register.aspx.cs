@@ -13,7 +13,7 @@ namespace MyWebsite.Account
     public partial class Register : Page
     {
 
-        Practical1Entities db = new Practical1Entities();
+        Practical1Entities1 dbo = new Practical1Entities1();
        
 
         protected void CreateNewUser_Click(object sender, EventArgs e)
@@ -27,7 +27,6 @@ namespace MyWebsite.Account
 
             user.Username = username;
             user.Password = password;
-            user.Username = username;
             user.Forename = forename;
             user.Surname = surname;
 
@@ -60,7 +59,7 @@ namespace MyWebsite.Account
             bool exists = false;
             try
             {
-                foreach (var _user in db.Users.Where(t => t.Username == user.Username))
+                foreach (var _user in dbo.Users.Where(t => t.Username == user.Username))
                 {
                     exists = true;
                 }
@@ -82,28 +81,28 @@ namespace MyWebsite.Account
                     if (user.Username != null && user.Password != null)
                     {
                         //Remove this line if using auto-increment in the database
-                        user.UserID = Guid.NewGuid().ToString();
-                        db.Entry(user).State = System.Data.Entity.EntityState.Added;
+                        //user.UserID = Guid.NewGuid().ToString();
+                        dbo.Entry(user).State = System.Data.Entity.EntityState.Added;
                     }
                 }
                 if (entityState == "Modify")
                 {
-                    foreach (var _user in db.Users.Where(t => t.UserID == user.UserID))
+                    foreach (var _user in dbo.Users.Where(t => t.UserID == user.UserID))
                     {
                         _user.Username = user.Username;
                         _user.Password = user.Password;
                         _user.Forename = user.Forename;
                         _user.Surname = user.Surname;
                     }
-                    db.Configuration.AutoDetectChangesEnabled = true;
-                    db.Configuration.ValidateOnSaveEnabled = true;
+                    dbo.Configuration.AutoDetectChangesEnabled = true;
+                    dbo.Configuration.ValidateOnSaveEnabled = true;
                 }
                 if (entityState == "Delete")
                 {
-                    db.Users.RemoveRange(
-                    db.Users.Where(t => t.UserID == user.UserID));
+                    dbo.Users.RemoveRange(
+                    dbo.Users.Where(t => t.UserID == user.UserID));
                 }
-                int saved = db.SaveChanges();
+                int saved = dbo.SaveChanges();
                 if (saved > 0)
                 {
                     updated = true;

@@ -12,12 +12,15 @@ namespace MyWebsite
     using System;
     using System.Collections.Generic;
     
-    public partial class User
+    public partial class RaceName
     {
-        public int UserID { get; set; }
-        public string Forename { get; set; }
-        public string Surname { get; set; }
-        public string Username { get; set; }
-        public string Password { get; set; }
+        public string PPSno { get; set; }
+        public string RaceName1 { get; set; }
+        public Nullable<System.TimeSpan> StartTime { get; set; }
+        public Nullable<System.TimeSpan> EndTime { get; set; }
+        public Nullable<System.TimeSpan> TimeCompletd { get; set; }
+    
+        public virtual Participant Participant { get; set; }
+        public virtual RaceStat RaceStat { get; set; }
     }
 }

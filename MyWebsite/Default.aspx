@@ -3,19 +3,18 @@
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
 
     <div class="jumbotron">
-        <h1>My great website</h1>
-        <p class="lead">Welcome to my wonderful website. Click on any of the links below to direct you to relevant information.</p>
+        <h1>Letterkenny&#39;s 10k Race Web site.</h1>
+        <p class="lead">This website will provide you will user and race information plus all the tools and information required to manage the Letterkenny 10k Race database.</p>
         
-    </div>
+        <img alt="" src="./Bike.jpg" /></div>
 
     <div class="row">
         <div class="col-md-4">
             <h2>Reports</h2>
             <p>
-                Click on this button to view reports available to the user.
-            </p>
+                Click on this button to view race reports</p>
              <p>
-                <a class="btn btn-default" href="/reports.aspx">View reports &raquo;</a>
+                <a class="btn btn-default" href="http://win-vpos7slarr4/Reports/10KRaceReports">View reports &raquo;</a>
             </p>
            
         </div>
@@ -25,7 +24,7 @@
                 Click here to update records in the database.
             </p>
              <p>
-                <a class="btn btn-default" href="/transactions.aspx">Update records &raquo;</a>
+                <a class="btn btn-default" href="/SelectEdit.aspx">Update records &raquo;</a>
             </p>
            
         </div>
